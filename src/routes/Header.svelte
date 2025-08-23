@@ -5,8 +5,9 @@
 
 	let isDarkMode = false;
 
+	$: currentPath = page.url?.pathname;
+
 	onMount(() => {
-		// Verifica a preferência salva ou do sistema
 		const savedTheme = localStorage.getItem('theme');
 		const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 		
@@ -30,363 +31,196 @@
 </script>
 
 <header>
-	<div class="container">
-		<div class="header-content">
-			<!-- Logo Section -->
-			<div class="logo-section">
-				<a href="/" class="logo">
-					Atlas
-				</a>
-			</div>
+	<nav>
+		<span class="container">
+			<a class="title" href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
+				Atlas
+			</a>
+			<button>
+				Pesquisar
+			</button>
+		</span>
 
-			<!-- Search Button -->
-			<div class="search-section">
-				<button class="search-button" type="button" aria-label="Search">
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="11" cy="11" r="8"/>
-						<path d="m21 21-4.35-4.35"/>
-					</svg>
-					<span>Pesquisar</span>
-					<kbd class="search-kbd">⌘K</kbd>
-				</button>
-			</div>
+		<span class="nav-links">
+			<a href="/">
+				Using Atlas
+			</a>
+			<a href="/">
+				Contributing
+			</a>
+			<a href="/">
+				Style Guide
+			</a>
+			<a href="/">
+				Design Tokens
+			</a>
+			<a class="div-line" href="/components/overview" aria-current={page.url.pathname.startsWith('/components') ? 'page' : undefined}>
+				Components
+			</a>
+		</span>
 
-			<!-- Navigation Menu -->
-			<nav class="nav-menu">
-				<a 
-					href="/using" 
-					class="nav-item" 
-					class:active={page.url.pathname === '/using'}
-				>
-					Using Atlas
-				</a>
-				<a 
-					href="/contributing" 
-					class="nav-item"
-					class:active={page.url.pathname === '/contributing'}
-				>
-					Contributing
-				</a>
-				<a 
-					href="/style-guide" 
-					class="nav-item"
-					class:active={page.url.pathname === '/style-guide'}
-				>
-					Style Guide
-				</a>
-				<a 
-					href="/design-tokens" 
-					class="nav-item"
-					class:active={page.url.pathname === '/design-tokens'}
-				>
-					Design Tokens
-				</a>
-				<a 
-					href="/components" 
-					class="nav-item"
-					class:active={page.url.pathname === '/components'}
-				>
-					Components
-				</a>
-			</nav>
-
-			<!-- Theme Toggle and GitHub -->
-			<div class="actions-section">
-				<!-- Theme Toggle Switch -->
-				<button 
-					class="theme-toggle" 
-					on:click={toggleTheme}
-					aria-label={isDarkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
-				>
-					<div class="toggle-track" class:dark={isDarkMode}>
-						<div class="toggle-thumb" class:dark={isDarkMode}>
-							{#if isDarkMode}
-								<!-- Moon Icon -->
-								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-								</svg>
-							{:else}
-								<!-- Sun Icon -->
-								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<circle cx="12" cy="12" r="5"/>
-									<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-								</svg>
-							{/if}
-						</div>
+		<span class="theme-button">
+			<button
+				class="theme-toggle"
+				on:click={toggleTheme}
+				aria-label={isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'}
+			>
+				<div class="toggle-track" class:dark={isDarkMode}>
+					<div class="toggle-thumb" class:dark={isDarkMode}>
+						{#if isDarkMode}
+							<!-- Moon Icon -->
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+							</svg>
+						{:else}
+							<!-- Sun Icon -->
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="5"/>
+								<path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+							</svg>
+						{/if}
 					</div>
-				</button>
+				</div>
+			</button>
+		</span>
 
-				<!-- GitHub Link -->
-				<a 
-					href="https://github.com/Gustavo22Soaresh/Design-Atlas" 
-					class="github-link"
-					aria-label="GitHub Repository"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<img src={github} alt="GitHub" />
-				</a>
-			</div>
-		</div>
-	</div>
+		<!-- GitHub Link -->
+		<a
+			href="https://github.com/Gustavo22Soaresh/Design-Atlas"
+			class="github-link"
+			aria-label="GitHub Repository"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<img width="20" src={github} alt="GitHub" />
+		</a>
+
+	</nav>
 </header>
 
 <style>
 	@import '../style/global.css';
+
 	header {
-		position: sticky;
+		position: fixed;
 		top: 0;
-		z-index: 100;
+		left: 0;
 		width: 100%;
-		background: var(--bgn-base);
-		border-bottom: var(--border-style-base);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
+		z-index: 30;
+		background-color: var(--bgn-base);
+		
+	}
+
+	nav {
+		position: relative;
+		margin: var(--dimension-16) auto;
+		width: calc(var(--dimension-1440) - var(--dimension-64));
 	}
 
 	.container {
-		max-width: var(--dimension-1440);
-		margin: 0 auto;
-		padding: 0 var(--spacing-32);
+		margin-right: var(--dimension-512);
 	}
 
-	.header-content {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: var(--dimension-64);
-		gap: var(--spacing-24);
-	}
-
-	/* Logo Section */
-	.logo-section {
-		flex-shrink: 0;
-	}
-
-	.logo {
-		display: flex;
-		align-items: center;
-		text-decoration: none;
-		color: var(--color-emphasized);
+	.title {
+		margin-right: var(--dimension-32);
 		font-weight: var(--font-weight-bold);
-		font-size: var(--font-size-20);
-		transition: opacity 0.2s ease;
-	}
-
-	.logo:hover {
-		opacity: 0.8;
-	}
-
-	/* Search Section */
-	.search-section {
-		flex: 1;
-		max-width: var(--size-416);
-		margin-left: var(--spacing-40);
-	}
-
-	.search-button {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-		padding: var(--spacing-8) var(--spacing-12);
-		border: var(--border-style-base);
-		border-radius: var(--border-radius-8);
-		background: var(--bgn-base);
-		color: var(--color-subtle);
-		font-size: var(--font-size-16);
-		font-family: var(--font-family-sans-serif);
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.search-button:hover {
-		border-color: var(--border-color-accent);
-		background: var(--bgn-surface);
-	}
-
-	.search-button:focus {
-		outline: none;
-		border: var(--border-style-focus);
-	}
-
-	.search-button svg {
-		margin-right: var(--spacing-8);
-		color: var(--color-subtle);
-	}
-
-	.search-kbd {
-		background: var(--bgn-surface);
-		border: var(--border-style-base);
-		border-radius: var(--border-radius-4);
-		padding: 2px var(--spacing-8);
-		font-size: var(--font-size-12);
-		color: var(--color-subtle);
-		font-family: var(--font-family-sans-serif);
-		font-weight: var(--font-weight-semibold);
-	}
-
-	/* Navigation Menu */
-	.nav-menu {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-32);
-		margin-left: auto;
-		margin-right: var(--spacing-24);
-	}
-
-	.nav-item {
-		color: var(--color-base);
 		text-decoration: none;
-		font-weight: var(--font-weight-semibold);
-		font-size: var(--font-size-16);
-		padding: var(--spacing-8) 0;
-		border-bottom: 2px solid transparent;
-		transition: all 0.2s ease;
-		white-space: nowrap;
 	}
 
-	.nav-item:hover {
+
+	.nav-links a[aria-current="page"] {
 		color: var(--color-accent);
 	}
 
-	.nav-item.active {
-		color: var(--color-accent);
-		border-bottom-color: var(--color-accent);
+	.nav-links > a {
+		color: var(--color-base);
+		margin-right: var(--dimension-16);
+		text-decoration: none;
 	}
 
-	/* Actions Section */
-	.actions-section {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-16);
-		flex-shrink: 0;
+	.theme-button::before {
+		content: "|";
+		padding-right: 10px;
+		opacity: 10%;
 	}
 
-	/* Theme Toggle */
+	.theme-button::after {
+		content: "|";
+		padding-left: 10px;
+		opacity: 10%;
+	}
+
 	.theme-toggle {
 		background: none;
 		border: none;
+		padding: 0;
 		cursor: pointer;
-		padding: var(--spacing-4);
+		align-items: center;
+		vertical-align: middle;
+		justify-content: center;
+		transition: all 0.2s ease;
 	}
 
 	.toggle-track {
-		width: 48px;
-		height: 24px;
-		background: var(--bgn-base);
-		border: var(--border-style-base);
-		border-radius: var(--border-radius-24);
+		width: 32px;
+		height: 16px;
+		border-radius: 8px;
 		position: relative;
-		transition: all 0.2s ease;
+		transition: all 0.3s ease;
+		
+		background: var(--bgn-surface);
+		border: 1px solid var(--bgn-base);
 	}
 
-	.toggle-track.dark {
-		background: var(--color-accent);
-		border-color: var(--color-accent);
+	.theme-toggle.dark .toggle-track {
+		background: var(--bgn-surface);
+		border: 1px solid var(--bgn-base);
 	}
 
 	.toggle-thumb {
-		width: 20px;
-		height: 20px;
-		background: var(--bgn-surface);
-		border-radius: 50%;
+		width: 12px;
+		height: 12px;
+		border-radius: 7px;
 		position: absolute;
-		top: 1px;
-		left: 1px;
+		top: 2px;
+		left: 2px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all 0.2s ease;
-		box-shadow: var(--shadow-sm);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		
+		background: var(--bgn-surface);
 		color: var(--color-base);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 	}
 
 	.toggle-thumb.dark {
-		transform: translateX(24px);
-		background: var(--bgn-surface);
-		color: var(--color-emphasized);
+		transform: translateX(16px);
+		background: var(--bgn-base);
+		color: var(--color-base);
 	}
 
 	.theme-toggle:hover .toggle-track {
-		background: var(--bgn-surface-hover);
+		border-color: var(--color-accent);
 	}
 
-	.theme-toggle:hover .toggle-track.dark {
-		background: var(--color-accent-hover);
+	.theme-toggle:focus {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-radius: 10px;
 	}
 
-	/* GitHub Link */
+	/* Animação suave dos ícones */
+	.toggle-thumb svg {
+		transition: all 0.2s ease;
+	}
+
 	.github-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: var(--dimension-40);
-		height: var(--dimension-40);
-		border-radius: var(--border-radius-8);
-		transition: background-color 0.2s ease;
-	}
-
-	.github-link:hover {
-		background-color: var(--bgn-surface-hover);
+		vertical-align: sub;
 	}
 
 	.github-link img {
-		width: var(--dimension-20);
-		height: var(--dimension-20);
-		object-fit: contain;
-		filter: brightness(0) saturate(100%) invert(0.3) sepia(0) saturate(0) hue-rotate(0deg) brightness(0.7) contrast(1.2);
+		color: red;
 	}
 
-	/* Dark mode GitHub icon filter */
-	:global([color-scheme="dark"]) .github-link img {
-		filter: brightness(0) saturate(100%) invert(0.8) sepia(0) saturate(0) hue-rotate(0deg) brightness(1.2) contrast(1);
-	}
-
-	/* Responsive Design */
-	@media (max-width: 1200px) {
-		.nav-menu {
-			gap: var(--spacing-24);
-		}
-
-		.nav-item {
-			font-size: calc(var(--font-size-16) - 1px);
-		}
-	}
-
-	@media (max-width: 768px) {
-		.container {
-			padding: 0 var(--spacing-16);
-		}
-
-		.search-section {
-			display: none;
-		}
-
-		.nav-menu {
-			display: none;
-		}
-
-		.header-content {
-			justify-content: space-between;
-		}
-
-		.logo {
-			font-size: var(--font-size-20);
-		}
-	}
-
-	@media (max-width: 480px) {
-		.container {
-			padding: 0 var(--spacing-12);
-		}
-
-		.header-content {
-			height: calc(var(--dimension-64) - 8px);
-		}
-
-		.actions-section {
-			gap: var(--spacing-12);
-		}
-	}
 </style>

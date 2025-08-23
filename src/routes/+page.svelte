@@ -7,20 +7,17 @@
 		{
 			icon: "⚡️",
 			title: "Svelte-Powered",
-			description: "Components optimized with Svelte for efficient rendering and zero runtime overhead. Built for performance and developer experience.",
-			href: "/components"
+			description: "Components optimized with Svelte for efficient rendering and zero runtime overhead.",
 		},
 		{
 			icon: "✨",
-			title: "Design Tokens",
-			description: "Native support for light/dark themes and customizations using design tokens. Consistent visual language across all platforms.",
-			href: "/design-tokens"
+			title: "Flexible Theming",
+			description: "Native support for light/dark themes and customizations using design tokens.",
 		},
 		{
 			icon: "🤝",
 			title: "Community-Driven",
 			description: "Built collaboratively with the OSM community, open to contributions and adaptable to diverse mapping needs.",
-			href: "/contributing"
 		}
 	];
 </script>
@@ -34,9 +31,7 @@
 	<!-- Hero Section -->
 	<Hero 
 		title="Atlas"
-		subtitle="Design System for OpenStreetMap"
-		ctaText="Get Started"
-		ctaHref="/getting-started"
+		subtitle="Design System for OpenStreetMap."
 	/>
 
 	<!-- Features Section -->
@@ -44,13 +39,11 @@
 		<div class="container">
 
 			<div class="features-grid">
-				{#each features as feature, index}
+				{#each features as feature}
 					<FeatureCard 
 						icon={feature.icon}
 						title={feature.title}
 						description={feature.description}
-						href={feature.href}
-						delay={index * 0.1}
 					/>
 				{/each}
 			</div>
@@ -76,81 +69,41 @@
 </main>
 
 <style>
-	main {
-		min-height: 100vh;
-	}
-
 	.container {
-		max-width: var(--dimension-1440);
+		max-width: 80rem;
 		margin: 0 auto;
 		padding: 0 var(--spacing-32);
 	}
 
 	/* Features Section */
 	.features {
-		padding: var(--spacing-96) 0;
-		background: var(--bgn-surface);
-	}
-
-	.features-header {
-		text-align: center;
-		max-width: var(--size-872);
-		margin: 0 auto var(--spacing-64);
-	}
-
-	.features-title {
-		font-size: var(--font-size-48);
-		font-weight: var(--font-weight-semibold);
-		color: var(--color-emphasized);
-		margin-bottom: var(--spacing-24);
-		line-height: var(--line-height-header);
-	}
-
-	.features-subtitle {
-		font-size: var(--font-size-20);
-		color: var(--color-base);
-		line-height: var(--line-height-paragraph);
-		max-width: var(--size-600);
-		margin: 0 auto;
+		background: var(--bgn-base);
 	}
 
 	.features-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-		gap: var(--spacing-32);
 		margin-top: var(--spacing-64);
 	}
 
 	/* Inspiration Section */
 	.inspiration {
-		padding: var(--spacing-96) 0;
+		padding-top: 40px;
 		background: var(--bgn-base);
 	}
 
 	.inspiration-content {
-		max-width: var(--size-872);
+		max-width: 78rem;
 		margin: 0 auto;
-		text-align: center;
-	}
-
-	.inspiration-title {
-		font-size: var(--font-size-40);
-		font-weight: var(--font-weight-semibold);
-		color: var(--color-emphasized);
-		margin-bottom: var(--spacing-32);
-		line-height: var(--line-height-header);
+		text-align: justify;
+		padding-right: var(--dimension-32);
 	}
 
 	.inspiration-description {
-		font-size: var(--font-size-20);
+		font-size: var(--font-size-14);
 		color: var(--color-base);
 		line-height: var(--line-height-paragraph);
-		margin-bottom: var(--spacing-24);
 		max-width: none;
-	}
-
-	.inspiration-description:last-child {
-		margin-bottom: 0;
 	}
 
 	.inspiration-link {
@@ -161,7 +114,7 @@
 	}
 
 	.inspiration-link:hover {
-		color: var(--color-link-active);
+		color: var(--color-link-hover);
 	}
 
 	.inspiration-link:visited {
@@ -187,22 +140,6 @@
 
 		.inspiration {
 			padding: var(--spacing-64) 0;
-		}
-
-		.features-header {
-			margin-bottom: var(--spacing-40);
-		}
-
-		.features-title {
-			font-size: var(--font-size-32);
-		}
-
-		.features-subtitle {
-			font-size: var(--font-size-16);
-		}
-
-		.inspiration-title {
-			font-size: var(--font-size-32);
 		}
 
 		.inspiration-description {
