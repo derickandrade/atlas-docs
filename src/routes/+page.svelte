@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Hero from '$lib/components/Hero.svelte';
 	import FeatureCard from '$lib/components/FeatureCard.svelte';
+	import AtlButton from '$lib/components/atl-button.svelte';
 
 	// Dados das features
 	const features = [
@@ -28,11 +28,15 @@
 </svelte:head>
 
 <main>
-	<!-- Hero Section -->
-	<Hero 
-		title="Atlas"
-		subtitle="Design System for OpenStreetMap."
-	/>
+
+	<div id="home-main">
+		<div id="title">
+			<h1 id="main-title">Atlas</h1>
+			<h1 id="subtitle">Design System for OpenStreetMap.</h1>
+		</div>
+		<AtlButton>Start Using</AtlButton>
+		<AtlButton variant="outline">GitHub</AtlButton>
+	</div>
 
 	<!-- Features Section -->
 	<section class="features">
@@ -69,6 +73,26 @@
 </main>
 
 <style>
+
+	@import '../style/global.css';
+
+	#home-main {
+		margin: var(--spacing-64) 0 0 var(--spacing-64);
+	}
+
+	#title {
+		margin-bottom: var(--spacing-32);
+	}
+
+	#title h1 {
+		text-align: start;
+		font-weight: 700;
+	}
+
+	#subtitle {
+		width: var(--dimension-544);
+	}
+
 	.container {
 		max-width: 80rem;
 		margin: 0 auto;
