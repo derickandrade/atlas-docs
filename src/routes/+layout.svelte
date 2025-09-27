@@ -23,13 +23,12 @@
 	}
 
 	main {
-		flex: 1;
+		flex: 2;
 		display: flex;
 		flex-direction: column;
 		padding: 5rem 1rem;
 		width: 100%;
 		max-width: 100rem;
-		margin: 0 auto;
 		box-sizing: border-box;
 	}
 

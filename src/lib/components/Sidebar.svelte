@@ -37,18 +37,18 @@
 
 <style>
 .sidebar {
-  width: var(--dimension-128);
+  width: 15%;
   background: var(--bgn-base);
   padding: 1rem;
   border-right: 1px solid var(--bgn-surface);
-  position: relative;
-
+  position: fixed;
+  height: 100vh;
 }
 
 .div-line {
-    opacity: 15%;
+    opacity: 40%;
     height: 1px;
-    background-color: var(--color-base);
+    background-color: var(--bgn-surface);
     margin: var(--dimension-8) 0;
 }
 
@@ -76,4 +76,11 @@ a.active {
   font-weight: bold;
   color: var(--color-accent);
 }
+
+@media screen and (max-width: 1439px) {
+  .sidebar {
+    width: min(200px, 20%);
+  }
+}
+
 </style>
