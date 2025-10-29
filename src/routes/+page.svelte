@@ -1,6 +1,49 @@
 <script lang="ts">
 	import FeatureCard from '$lib/components/FeatureCard.svelte';
 	import AtlButton from '$lib/components/atl-button.svelte';
+	import AtlMenu from '$lib/components/AtlMenu.svelte';
+	import AtlContainer  from '$lib/components/AtlContainer.svelte';
+	import AtlAccordion from '$lib/components/AtlAccordion.svelte';
+
+	const accordionItems = [
+		{
+			label: 'What is Atlas?',
+			content: '<p>Atlas is a modern design system built with Svelte, tailored for the OpenStreetMap community. It provides a comprehensive set of UI components, design tokens, and guidelines to help developers create consistent and user-friendly applications that align with OSM\'s branding and values.</p>'
+		},
+		{
+			label: 'How can I contribute to Atlas?',
+			content: 'We welcome contributions from the community! You can contribute by submitting bug reports, feature requests, or even code contributions via our GitHub repository. Please refer to our contributing guidelines for more information on how to get involved.'
+		},
+		{
+			label: 'Is Atlas free to use?',
+			content: 'Yes, Atlas is an open-source project released under the MIT License. You are free to use, modify, and distribute it in accordance with the terms of the license.'
+		}
+	]
+
+	const menuItems = [
+		{
+			label: 'Action',
+			href: '#',
+        	icon: null,
+        	tiptext: 'Tooltip action example',
+        	tipicon: null,
+        	badgeNumber: 100,
+        	chevron: false,
+        	disabled: false,
+        	target: '_blank'
+		},
+		{
+			label: 'Action',
+			href: '#',
+			badgeNumber: 20,
+			chevron: true
+		},
+		{
+			label: 'Disabled Action',
+			href: '#',
+			disabled: true
+		}
+	];
 
 	// Dados das features
 	const features = [
@@ -28,7 +71,10 @@
 </svelte:head>
 
 <main>
-
+	<AtlAccordion items={accordionItems}></AtlAccordion>
+	<AtlContainer variant='close'></AtlContainer>
+	<AtlContainer variant='sheet'></AtlContainer>
+	<AtlMenu items={menuItems}></AtlMenu>
 	<div id="home-main">
 		<div id="title">
 			<h1 id="main-title">Atlas</h1>
