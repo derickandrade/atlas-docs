@@ -4,6 +4,7 @@
 	import AtlMenu from '$lib/components/AtlMenu.svelte';
 	import AtlContainer  from '$lib/components/AtlContainer.svelte';
 	import AtlAccordion from '$lib/components/AtlAccordion.svelte';
+	import AtlTabs from '$lib/components/AtlTabs.svelte';
 
 	const accordionItems = [
 		{
@@ -71,6 +72,8 @@
 </svelte:head>
 
 <main>
+	<AtlTabs></AtlTabs>
+	<br/>
 	<AtlAccordion items={accordionItems}></AtlAccordion>
 	<AtlContainer variant='close'></AtlContainer>
 	<AtlContainer variant='sheet'></AtlContainer>

@@ -1,11 +1,19 @@
 <script lang="ts">
-    export let label: string;
-    export let content: string;
     export interface AccordionItem {
         label: string;
         content: string;
     }
     export let items: AccordionItem[] = [];
+
+    let openItemLabel: string | null = null;
+
+    function showHide(itemLabel: string) {
+        if (openItemLabel === itemLabel) {
+            openItemLabel = null;
+        } else {
+            openItemLabel = itemLabel;
+        }
+    }
 
     const chevronDown = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_2752_2660" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="var(--color-base)"/></mask><g mask="url(#mask0_2752_2660)"><path d="M11.9997 14.45L19.3497 7.10005C19.5997 6.85005 19.8914 6.72922 20.2247 6.73755C20.5581 6.74588 20.8497 6.87505 21.0997 7.12505C21.3497 7.37505 21.4747 7.66672 21.4747 8.00005C21.4747 8.33338 21.3497 8.62505 21.0997 8.87505L13.4247 16.575C13.2247 16.775 12.9997 16.925 12.7497 17.025C12.4997 17.125 12.2497 17.175 11.9997 17.175C11.7497 17.175 11.4997 17.125 11.2497 17.025C10.9997 16.925 10.7747 16.775 10.5747 16.575L2.87474 8.87505C2.62474 8.62505 2.50391 8.32922 2.51224 7.98755C2.52058 7.64588 2.64974 7.35005 2.89974 7.10005C3.14974 6.85005 3.44141 6.72505 3.77474 6.72505C4.10808 6.72505 4.39974 6.85005 4.64974 7.10005L11.9997 14.45Z" fill="var(--color-base)"/></g></svg>`;
     
@@ -13,21 +21,44 @@
 </script>
 
 <div class="accordion">
-    {#each items as items}
-    <div class="item">
+    {#each items as item, index}
+    <button 
+        id={item.label} 
+        class="item" 
+        class:open={openItemLabel === item.label}
+        on:click={() => showHide(item.label)} 
+        aria-expanded={openItemLabel === item.label}
+        aria-controls={`content-${item.label.replace(/\s/g, '-')}`}
+    >
         <div class="label">
-            {items.label}
+            {item.label}
             <span class="chevron-down" aria-hidden="true">
-                {@html  chevronDown }
+                {#if openItemLabel !== item.label}
+                    {@html chevronDown}
+                {/if}
             </span>
             <span class="chevron-up" aria-hidden="true">
-                {@html  chevronUp }
+                {#if openItemLabel == item.label}
+                    {@html chevronUp}
+                {/if}
             </span>
         </div>
-        <div class="content">
-            {@html items.content}
-        </div>
+    </button>
+    {#if index < items.length - 1 || openItemLabel === item.label}
+    <div class="divline"></div>
+    {/if}
+    {#if openItemLabel === item.label}
+    <div 
+            class="content" 
+            class:open={openItemLabel === item.label}
+            id={`content-${item.label.replace(/\s/g, '-')}`}
+        >
+            {@html item.content}
     </div>
+    {#if index < items.length - 1}
+    <div class="divline"></div>
+    {/if}
+    {/if}
     {/each}
 </div>
 
@@ -36,30 +67,59 @@
     
     .accordion {
         position: relative;
-        max-width: 684px;
+        width: 684px;
         border: 1px solid var(--border-color-base);
         border-radius: 8px;
         box-shadow: var(--shadow-md);
     }
 
     .content {
-        display: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        padding: 16px;
+    }
+    .divline {
+        height: 1px;
+        opacity: 0.5;
+        background-color: var(--border-color-base);
     }
 
     .chevron-down {
         position: absolute;
         right: 3%;
-        display: inline-block;
     }
 
     .chevron-up {
-        display: none;
+        position: absolute;
+        right: 3%;
     }
 
     .item {
+        display: block;
+        width: 100%;
+        text-align: left;
         padding: 16px;
-        height: 56px;
-        border-bottom: 0.4px solid var(--border-color-base);
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        border: none;
+    }
+
+    .content {
+        max-height: 286px;
+        padding-top: 16px;
+        color: var(--color-subtle);
+    }
+
+    .item:hover {
+        background-color: var(--bgn-disable);
+        cursor: pointer;
+    }
+
+    .item:focus {
+        outline: 2px solid var(--border-color-accent);
+        outline-offset: 2px;
     }
 
     .label {
