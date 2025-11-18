@@ -5,6 +5,7 @@
 	import AtlContainer  from '$lib/components/AtlContainer.svelte';
 	import AtlAccordion from '$lib/components/AtlAccordion.svelte';
 	import AtlTabs from '$lib/components/AtlTabs.svelte';
+	import AtlToggleSwitch from '$lib/components/AtlToggleSwitch.svelte';
 
 	const accordionItems = [
 		{
@@ -72,6 +73,9 @@
 </svelte:head>
 
 <main>
+	<AtlToggleSwitch label="Teste">
+
+	</AtlToggleSwitch>
 	<AtlTabs></AtlTabs>
 	<br/>
 	<AtlAccordion items={accordionItems}></AtlAccordion>
