@@ -64,7 +64,6 @@
         border: 0.4px solid var(--border-color-base);
         border-radius: 1.5em;
         cursor: pointer;
-        
         pointer-events: auto; 
     }
 
@@ -104,7 +103,7 @@
 
     .toggle-container button[aria-checked='true']::before {
         background-color: var(--bgn-surface);
-        transform: translateX(19px);
+        transform: translateX(21px);
         transition: transform 0.3s;
     }
 
